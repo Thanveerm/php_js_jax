@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Php Api </title>
+</head>
+<body>
+	<h1>API Code</h1>
+	<table id="result"></table>
+	
+	<script>
+		window.onload = function getData() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var data = JSON.parse(this.responseText);
+					var table = document.getElementById("result");
+					var headers = ["Name", "Age", "Email"];
+					var headerRow = document.createElement("tr");
+					for (var i = 0; i < headers.length; i++) {
+						var headerCell = document.createElement("th");
+						headerCell.textContent = headers[i];
+						headerRow.appendChild(headerCell);
+					}
+					table.appendChild(headerRow);
+					for (var i = 0; i < data.length; i++) {
+						var row = document.createElement("tr");
+						var nameCell = document.createElement("td");
+						nameCell.textContent = data[i].name;
+						row.appendChild(nameCell);
+						var ageCell = document.createElement("td");
+						ageCell.textContent = data[i].age;
+						row.appendChild(ageCell);
+						var emailCell = document.createElement("td");
+						emailCell.textContent = data[i].email;
+						row.appendChild(emailCell);
+						table.appendChild(row);
+					}
+				}
+			};
+			xhr.open("GET", "json.php", true);
+			xhr.send();
+		}
+	</script>
+</body>
+</html>
